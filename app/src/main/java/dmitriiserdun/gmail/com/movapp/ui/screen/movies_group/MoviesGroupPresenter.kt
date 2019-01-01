@@ -5,22 +5,28 @@ import dmitriiserdun.gmail.com.movapp.repository.Repository
 import dmitriiserdun.gmail.com.movapp.repository.dto.Movie
 import dmitriiserdun.gmail.com.movapp.repository.dto.PaginationWrapper
 import dmitriiserdun.gmail.com.movapp.tools.onMainThread
+import dmitriiserdun.gmail.com.movapp.ui.screen.movies_group.adapters.MovieItem
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
 class MoviesGroupPresenter(var view: MoviesGroupContract.MoviesGroupView) : MoviesGroupContract.MoviesGroupPresenter {
     init {
-        var t = Repository.remote.getLastPopularFilms().subscribe(object : Observer<PaginationWrapper<Movie>> {
-            override fun onComplete() = Unit
-            override fun onSubscribe(d: Disposable) = Unit
+        var items = mutableListOf<MovieItem>()
+
+
+        Repository.remote.getLastPopularFilms().subscribe(object : Observer<PaginationWrapper<Movie>> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+            }
 
             override fun onNext(t: PaginationWrapper<Movie>) {
-                Log.d("test", "test")
+                view.setMoviesData(t.results!!.map { MovieItem(it) })
             }
 
             override fun onError(e: Throwable) {
-                Log.d("test", "test")
-
             }
         })
     }
