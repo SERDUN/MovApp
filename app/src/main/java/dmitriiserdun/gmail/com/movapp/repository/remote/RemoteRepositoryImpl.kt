@@ -7,8 +7,8 @@ import dmitriiserdun.gmail.com.movapp.tools.onMainThread
 import io.reactivex.Observable
 
 class RemoteRepositoryImpl(var services: ApiService, var apiKey: String) : RemoteRepository {
-    override fun getLastPopularFilms(): Observable<PaginationWrapper<Movie>> {
-        return onBackgroundThread(services.getLastPopularFilms(apiKey))
+    override fun getLastPopularFilms(page: Int?): Observable<PaginationWrapper<Movie>> {
+        return onBackgroundThread(services.getLastPopularFilms(apiKey,page))
     }
 
 }

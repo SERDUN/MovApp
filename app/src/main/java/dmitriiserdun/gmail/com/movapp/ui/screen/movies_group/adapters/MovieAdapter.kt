@@ -3,7 +3,6 @@ package dmitriiserdun.gmail.com.movapp.ui.screen.movies_group.adapters
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +11,19 @@ import dmitriiserdun.gmail.com.movapp.R
 import kotlinx.android.synthetic.main.item_recycler_view_movie.view.*
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
-import dmitriiserdun.gmail.com.movapp.App
 import dmitriiserdun.gmail.com.movapp.BuildConfig
 import java.lang.Exception
-import android.widget.Toast
-import dmitriiserdun.gmail.com.movapp.ui.screen.MainActivity
 import android.support.v7.graphics.Palette
-import android.R.attr.bitmap
+import android.widget.LinearLayout
+import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.FlexboxLayoutManager
 
 
-
-
-class MovieAdapter(val items: List<MovieItem>, val context: Context, val listener: (MovieItem) -> Unit) :
+class MovieAdapter(
+    val items: List<MovieItem>,
+    val context: Context,
+    val listener: (MovieItem) -> Unit
+) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
 
@@ -41,10 +41,15 @@ class MovieAdapter(val items: List<MovieItem>, val context: Context, val listene
     }
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(item: MovieItem, listener: (MovieItem) -> Unit, items: List<MovieItem>) = with(itemView) {
-
-
+    class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(
+            item: MovieItem,
+            listener: (MovieItem) -> Unit,
+            items: List<MovieItem>
+        ) = with(itemView) {
+            //            var ll = FlexboxLayoutManager.LayoutParams(widthItem, (widthItem * 1.75).toInt())
+            view.setOnClickListener { listener(item) }
+//            view.layoutParams = ll
             Picasso.get().load(BuildConfig.API_IMAGE_URL + item.dto.backdropPath)
                 .into(object : Target {
                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
@@ -56,10 +61,7 @@ class MovieAdapter(val items: List<MovieItem>, val context: Context, val listene
                     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                         Palette.from(bitmap!!)
                             .generate(Palette.PaletteAsyncListener { palette ->
-                                val textSwatch = palette!!.vibrantSwatch
-                                if (textSwatch == null) {
-                                    return@PaletteAsyncListener
-                                }
+                                val textSwatch = palette!!.vibrantSwatch ?: return@PaletteAsyncListener
                                 tv_item_name_rv.setTextColor(textSwatch.titleTextColor)
                                 tv_item_rating_rv.setTextColor(textSwatch.bodyTextColor)
                                 iv_info_container_rv.setBackgroundColor(textSwatch.rgb)

@@ -5,6 +5,6 @@ import dmitriiserdun.gmail.com.movapp.repository.dto.PaginationWrapper
 import io.reactivex.Observable
 
 interface RemoteRepository {
-    fun getLastPopularFilms(): Observable<PaginationWrapper<Movie>>
+    fun getLastPopularFilms(page: Int?): Observable<PaginationWrapper<Movie>>
 
 }

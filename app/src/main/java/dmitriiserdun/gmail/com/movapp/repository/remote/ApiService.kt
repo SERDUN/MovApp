@@ -8,5 +8,5 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("discover/movie")
-    fun getLastPopularFilms(@Query("api_key") apiKey: String): Observable<PaginationWrapper<Movie>>
+    fun getLastPopularFilms(@Query("api_key") apiKey: String,@Query("page") page: Int?): Observable<PaginationWrapper<Movie>>
 }
