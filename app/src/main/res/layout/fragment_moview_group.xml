@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.screen.movies_group.MoviesGroupFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:background="@color/backgroundColor"
+              android:layout_height="match_parent"
+              tools:context=".ui.screen.movies_group.MoviesGroupFragment">
+    <FrameLayout android:layout_width="match_parent"
+                 android:background="@color/colorPrimary"
+                 android:layout_weight="0"
+                 android:layout_height="?attr/actionBarSize">
+        <TextView android:layout_width="wrap_content"
+                  android:textSize="@dimen/cardTitle"
+                  android:layout_marginLeft="8dp"
+                  android:layout_gravity="center_vertical"
+                  android:textColor="@android:color/white"
+                  android:layout_height="wrap_content"
+                  android:text="Movies"/>
 
-    <android.support.v7.widget.RecyclerView
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/rv_movies_group_movies"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-</FrameLayout>
+    </FrameLayout>
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/rv_movies_group_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+    </FrameLayout>
+</LinearLayout>

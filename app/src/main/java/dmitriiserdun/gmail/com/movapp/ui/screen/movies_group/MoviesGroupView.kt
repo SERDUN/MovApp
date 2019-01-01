@@ -23,7 +23,7 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     var itemDecoration: RecyclerView.ItemDecoration = object : RecyclerView.ItemDecoration() {
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             super.getItemOffsets(outRect, view, parent, state)
-                outRect.set(16, 8, 16, 8)
+                outRect.set(8, 8, 8, 8)
 
 
         }
