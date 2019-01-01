@@ -3,8 +3,8 @@ package dmitriiserdun.gmail.com.movapp.services.factory
 import android.app.Activity
 import android.content.Intent
 import dmitriiserdun.gmail.com.movapp.App
-import dmitriiserdun.gmail.com.movapp.MainActivity
 import dmitriiserdun.gmail.com.movapp.services.navigation.enumeration.Screen
+import dmitriiserdun.gmail.com.movapp.ui.screen.MainActivity
 
 class ScreenActivityFactory {
     fun getActivityByType(type: Screen): Intent {

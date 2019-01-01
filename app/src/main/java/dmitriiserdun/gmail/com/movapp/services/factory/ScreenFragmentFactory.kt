@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import dmitriiserdun.gmail.com.movapp.App
 import dmitriiserdun.gmail.com.movapp.services.navigation.enumeration.Screen
+import dmitriiserdun.gmail.com.movapp.ui.screen.movies_group.MoviewGroupFragment
 
 class ScreenFragmentFactory {
     protected var context: Context? = null
@@ -16,10 +17,10 @@ class ScreenFragmentFactory {
 
     fun getFragmentClassByType(type: Screen): Class<out Fragment> {
         when (type) {
-            Screen. -> return ::class.java
+            Screen.GROUP_MOVIES -> return MoviewGroupFragment::class.java
 
         }
-        return ::class.java
+        return MoviewGroupFragment::class.java
 
     }
 }
