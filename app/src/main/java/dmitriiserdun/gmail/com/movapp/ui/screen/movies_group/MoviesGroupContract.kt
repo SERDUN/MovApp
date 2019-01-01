@@ -8,6 +8,11 @@ interface MoviesGroupContract {
     interface MoviesGroupView{
         fun setMoviesData(movies:List<MovieItem>)
         fun onBottomScrollAction():Subject<Any>
+
     }
-    interface MoviesGroupPresenter{}
+    interface MoviesGroupPresenter{
+       fun initView( view: MoviesGroupContract.MoviesGroupView)
+        fun onPause()
+        fun onResume()
+    }
 }

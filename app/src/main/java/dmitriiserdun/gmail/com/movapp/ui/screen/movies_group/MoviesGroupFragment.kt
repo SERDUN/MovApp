@@ -16,16 +16,31 @@ class MoviesGroupFragment : BaseFragment() {
     lateinit var view: MoviesGroupContract.MoviesGroupView
     lateinit var presenter: MoviesGroupContract.MoviesGroupPresenter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = MoviesGroupPresenter()
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var rootView = inflater.inflate(R.layout.fragment_moview_group, container, false)
         view = MoviesGroupView(this, rootView)
-        presenter = MoviesGroupPresenter(view)
+        presenter.initView(view)
 
         return rootView
     }
 
+    override fun onPause() {
+        presenter.onPause()
+        super.onPause()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+
+    }
 }

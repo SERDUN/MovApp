@@ -20,6 +20,8 @@ import org.reactivestreams.Subscriber
 import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import org.json.JSONException
+import android.support.v7.widget.LinearLayoutManager
 
 
 class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupContract.MoviesGroupView {
@@ -45,6 +47,11 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     private var moviesRecyclerView: RecyclerView = view.findViewById(R.id.rv_movies_group_movies)
     private lateinit var moviesRecyclerViewAdapter: MovieAdapter
     private var moviesData = mutableListOf<MovieItem>()
+    private var loading = true
+    var pastVisiblesItems: Int = 0
+    var visibleItemCount: Int = 0
+    var totalItemCount: Int = 0
+    val layoutManager = FlexboxLayoutManager(App.instance)
 
     init {
         initRecyclerView()
@@ -65,28 +72,34 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
         moviesRecyclerViewAdapter = MovieAdapter(moviesData, App.instance) {
             fragment.getBaseActivity().navigationController.navigateTo(Screen.DETAIL_MOVIE, ScreenType.FRAGMENT).build()
         }
-        val layoutManager = FlexboxLayoutManager(App.instance)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.FLEX_START
         moviesRecyclerView.adapter = moviesRecyclerViewAdapter
 
 
-//        moviesRecyclerView.layoutManager = GridLayoutManager(App.instance, 2)
         moviesRecyclerView.layoutManager = layoutManager
         moviesRecyclerView.addItemDecoration(itemDecoration);
 
+
         moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0)
+                {
+                    visibleItemCount = layoutManager.getChildCount()
+                    totalItemCount = layoutManager.getItemCount()
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
 
-                if (!recyclerView.canScrollVertically(1)) {
-
-                    onBottomAction.onNext(Any())
-
+                    if (loading) {
+                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                            onBottomAction.onNext(Any())
+                        }
+                    }
                 }
             }
         })
-    }
+
+
+}
 
 
 }
