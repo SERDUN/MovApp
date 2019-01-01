@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:background="@color/colorAccent"
              android:layout_height="match_parent"
-             tools:context=".ui.screen.movies_group.MoviewGroupFragment">
+             tools:context=".ui.screen.movies_group.MoviesGroupFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
