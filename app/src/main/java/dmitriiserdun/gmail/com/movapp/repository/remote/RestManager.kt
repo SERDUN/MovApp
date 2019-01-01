@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class RestManagerImpl {
+class RestManager {
     private var service: ApiService
     private lateinit var retrofit: Retrofit
     var api: RemoteRepository
@@ -20,7 +20,7 @@ class RestManagerImpl {
 
     init {
         service = createService()
-        api = RemoteRepositoryImpl(service)
+        api = RemoteRepositoryImpl(service,BuildConfig.API_KEY)
 
     }
 

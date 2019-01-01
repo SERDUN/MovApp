@@ -11,7 +11,7 @@ class ScreenFragmentFactory {
 
     fun getFragmentByType(type: Screen): Fragment {
         val clazz = getFragmentClassByType(type)
-        return Fragment.instantiate(App.instance.applicationContext, clazz.name)
+        return Fragment.instantiate(App.instance, clazz.name)
     }
 
 

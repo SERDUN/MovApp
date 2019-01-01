@@ -23,6 +23,7 @@ android {
         production {
             dimension 'app_constants'
             buildConfigField "String", "API_URL", '\"https://api.themoviedb.org/3/\"'
+            buildConfigField "String", "API_KEY", '\"48a6f6937012ae8e21026266fba8135f\"'
         }
 
     }
