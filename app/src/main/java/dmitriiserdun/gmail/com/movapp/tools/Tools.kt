@@ -22,28 +22,4 @@ object Tools {
     }
 
 
-    fun getWidthCardByScreenPortrait(width: Int) {
-        when (width) {
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-            in 0..240 ->Log.d("sds","sd")
-        }
-
-    }
-
-    fun getWidthCardByScreenLandscape(width: Int) {
-
-    }
-
-
 }

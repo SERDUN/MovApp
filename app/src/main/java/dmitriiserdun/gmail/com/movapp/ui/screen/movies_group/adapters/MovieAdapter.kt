@@ -31,7 +31,7 @@ class MovieAdapter(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], listener, items)
+        holder.bind(items[position], listener)
     }
 
 
@@ -47,9 +47,7 @@ class MovieAdapter(
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             item: MovieItem,
-            listener: (MovieItem) -> Unit,
-            items: List<MovieItem>
-        ) = with(itemView) {
+            listener: (MovieItem) -> Unit) = with(itemView) {
             view.setOnClickListener { listener(item) }
             Picasso.get().load(BuildConfig.API_IMAGE_URL + item.dto.backdropPath)
                 .into(object : Target {

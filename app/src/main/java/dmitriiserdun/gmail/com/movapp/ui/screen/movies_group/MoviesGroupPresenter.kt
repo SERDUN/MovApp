@@ -1,8 +1,8 @@
 package dmitriiserdun.gmail.com.movapp.ui.screen.movies_group
 
 import dmitriiserdun.gmail.com.movapp.repository.Repository
-import dmitriiserdun.gmail.com.movapp.repository.dto.Movie
-import dmitriiserdun.gmail.com.movapp.repository.dto.PaginationWrapper
+import dmitriiserdun.gmail.com.movapp.repository.dto.MovieDTO
+import dmitriiserdun.gmail.com.movapp.repository.dto.PaginationWrapperDTO
 import dmitriiserdun.gmail.com.movapp.ui.screen.movies_group.adapters.MovieItem
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
@@ -11,30 +11,23 @@ import io.reactivex.disposables.Disposable
 class MoviesGroupPresenter() : MoviesGroupContract.MoviesGroupPresenter {
     var nextPage: Int = 0
     var current: Int = 0
-    var movies = mutableListOf<Movie>()
+    var movies = mutableListOf<MovieDTO>()
     lateinit var view: MoviesGroupContract.MoviesGroupView
     var activeSubscriptions: CompositeDisposable? = null
     var requestSubscriptions: Disposable? = null
 
-    var requestSubscriptionsMovies = object : Observer<PaginationWrapper<Movie>> {
-        override fun onComplete() {
-
-        }
-
+    var requestSubscriptionsMovies = object : Observer<PaginationWrapperDTO<MovieDTO>> {
+        override fun onComplete()=Unit
         override fun onSubscribe(d: Disposable) {
             if (requestSubscriptions != null) {
                 if (!requestSubscriptions!!.isDisposed) {
                     requestSubscriptions!!.dispose()
                 }
             }
-
-
             requestSubscriptions = d
-
-
         }
 
-        override fun onNext(t: PaginationWrapper<Movie>) {
+        override fun onNext(t: PaginationWrapperDTO<MovieDTO>) {
             view.isShowErrorAndButtonForReload(false)
             view.isVisibleLoader(false)
 
@@ -61,6 +54,11 @@ class MoviesGroupPresenter() : MoviesGroupContract.MoviesGroupPresenter {
         }
     }
 
+    init {
+        Repository.remote.getLastPopularFilms(++nextPage).subscribe(requestSubscriptionsMovies)
+
+    }
+
 
     override fun initView(view: MoviesGroupContract.MoviesGroupView) {
         view.isShowErrorAndButtonForReload(false)
@@ -78,10 +76,7 @@ class MoviesGroupPresenter() : MoviesGroupContract.MoviesGroupPresenter {
     }
 
 
-    init {
-        Repository.remote.getLastPopularFilms(++nextPage).subscribe(requestSubscriptionsMovies)
 
-    }
 
 
 

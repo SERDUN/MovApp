@@ -3,7 +3,7 @@ package dmitriiserdun.gmail.com.movapp.repository.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class PaginationWrapper<T> {
+class PaginationWrapperDTO<T> {
 
     @SerializedName("page")
     @Expose

@@ -2,13 +2,12 @@ package dmitriiserdun.gmail.com.movapp.ui.screen.movies_details
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import dmitriiserdun.gmail.com.movapp.R
-import dmitriiserdun.gmail.com.movapp.repository.dto.Movie
+import dmitriiserdun.gmail.com.movapp.repository.dto.MovieDTO
 import dmitriiserdun.gmail.com.movapp.tools.Consts
 import dmitriiserdun.gmail.com.movapp.ui.base.BaseFragment
 
@@ -17,13 +16,13 @@ class MoviesDetailsFragment : BaseFragment() {
     lateinit var view: MoviesDetailContract.MovieDetailView
     lateinit var presenter: MoviesDetailContract.MovieDetailPresenter
 
-    private var movie: Movie? = null
+    private var movie: MovieDTO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            movie = it.getSerializable(Consts.BUNDLE_MOVIE_DETAIL_LEY) as Movie?
+            movie = it.getSerializable(Consts.BUNDLE_MOVIE_DETAIL_LEY) as MovieDTO?
         }
         presenter = MovieDetailPresenter(movie)
 

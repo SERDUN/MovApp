@@ -37,6 +37,22 @@ import io.reactivex.Observable
 
 
 class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupContract.MoviesGroupView {
+
+    var onBottomAction = PublishSubject.create<Any>()
+    private var moviesRecyclerView: RecyclerView = view.findViewById(R.id.rv_movies_group_movies)
+    private lateinit var moviesRecyclerViewAdapter: MovieAdapter
+    private var moviesData = mutableListOf<MovieItem>()
+    private var loading = true
+    var pastVisiblesItems: Int = 0
+    var visibleItemCount: Int = 0
+    var totalItemCount: Int = 0
+    val layoutManager = FlexboxLayoutManager(App.instance)
+
+    init {
+        initRecyclerView()
+    }
+
+
     override fun onReloadAction(): Observable<Any> {
         return RxView.clicks(view.findViewById<Button>(R.id.btn_reload))
     }
@@ -71,7 +87,6 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
 
     }
 
-    var onBottomAction = PublishSubject.create<Any>()
 
     override fun onBottomScrollAction(): Subject<Any> {
         return onBottomAction
@@ -92,18 +107,6 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     }
 
 
-    private var moviesRecyclerView: RecyclerView = view.findViewById(R.id.rv_movies_group_movies)
-    private lateinit var moviesRecyclerViewAdapter: MovieAdapter
-    private var moviesData = mutableListOf<MovieItem>()
-    private var loading = true
-    var pastVisiblesItems: Int = 0
-    var visibleItemCount: Int = 0
-    var totalItemCount: Int = 0
-    val layoutManager = FlexboxLayoutManager(App.instance)
-
-    init {
-        initRecyclerView()
-    }
 
     private fun initRecyclerView() {
         moviesRecyclerViewAdapter = MovieAdapter(moviesData, App.instance) {
@@ -116,16 +119,14 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
         layoutManager.justifyContent = JustifyContent.FLEX_START
         moviesRecyclerView.adapter = moviesRecyclerViewAdapter
 
-
         moviesRecyclerView.layoutManager = layoutManager
         moviesRecyclerView.addItemDecoration(itemDecoration);
-
 
         moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    visibleItemCount = layoutManager.getChildCount()
-                    totalItemCount = layoutManager.getItemCount()
+                    visibleItemCount = layoutManager.childCount
+                    totalItemCount = layoutManager.itemCount
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
 
                     if (loading) {
