@@ -3,7 +3,6 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:orientation="vertical"
-              android:background="@color/backgroundColor"
               android:layout_height="match_parent"
               tools:context=".ui.screen.movies_group.MoviesGroupFragment">
     <FrameLayout android:layout_width="match_parent"

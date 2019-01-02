@@ -2,8 +2,9 @@ package dmitriiserdun.gmail.com.movapp.repository.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Movie {
+class Movie:Serializable {
 
     @SerializedName("vote_count")
     @Expose

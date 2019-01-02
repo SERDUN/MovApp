@@ -3,8 +3,8 @@
               android:orientation="vertical"
               android:padding="4dp"
               android:background="@color/cardBackgroundColor"
-              android:layout_width="183dp"
-              android:layout_height="352dp">
+              android:layout_width="124dp"
+              android:layout_height="200dp">
     <ImageView android:layout_width="match_parent"
                android:id="@+id/iv_item_rv"
                android:scaleType="centerCrop"

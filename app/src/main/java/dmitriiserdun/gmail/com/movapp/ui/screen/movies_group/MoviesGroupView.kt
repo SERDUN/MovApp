@@ -1,6 +1,8 @@
 package dmitriiserdun.gmail.com.movapp.ui.screen.movies_group
 
+import android.graphics.Point
 import android.graphics.Rect
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.google.android.flexbox.FlexDirection
@@ -22,6 +24,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.json.JSONException
 import android.support.v7.widget.LinearLayoutManager
+import dmitriiserdun.gmail.com.movapp.tools.Consts
 
 
 class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupContract.MoviesGroupView {
@@ -58,10 +61,10 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     }
 
     private fun initRecyclerView() {
-//        val display = fragment.activity!!.getWindowManager().getDefaultDisplay()
-//        val size = Point()
-//        display.getSize(size)
-//        var width = 0
+        val display = fragment.activity!!.getWindowManager().getDefaultDisplay()
+        val size = Point()
+        display.getSize(size)
+        var width = 0
 //
 //        if (fragment.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 //            width = size.y
@@ -70,7 +73,10 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
 //        }
 //        width = (width - Tools.convertDpToPixel(24f, App.instance)).toInt()/2
         moviesRecyclerViewAdapter = MovieAdapter(moviesData, App.instance) {
-            fragment.getBaseActivity().navigationController.navigateTo(Screen.DETAIL_MOVIE, ScreenType.FRAGMENT).build()
+            var bundle = Bundle()
+            bundle.putSerializable(Consts.BUNDLE_MOVIE_DETAIL_LEY, it.dto)
+            fragment.getBaseActivity().navigationController.navigateTo(Screen.DETAIL_MOVIE, ScreenType.FRAGMENT)
+                .bundle(bundle).build()
         }
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.FLEX_START
@@ -83,8 +89,7 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
 
         moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0)
-                {
+                if (dy > 0) {
                     visibleItemCount = layoutManager.getChildCount()
                     totalItemCount = layoutManager.getItemCount()
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
@@ -99,7 +104,7 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
         })
 
 
-}
+    }
 
 
 }

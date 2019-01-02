@@ -8,27 +8,39 @@ import android.view.View
 import android.view.ViewGroup
 
 import dmitriiserdun.gmail.com.movapp.R
+import dmitriiserdun.gmail.com.movapp.repository.dto.Movie
+import dmitriiserdun.gmail.com.movapp.tools.Consts
+import dmitriiserdun.gmail.com.movapp.ui.base.BaseFragment
 
-class MoviesDetailsFragment : Fragment() {
+class MoviesDetailsFragment : BaseFragment() {
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var view: MoviesDetailContract.MovieDetailView
+    lateinit var presenter: MoviesDetailContract.MovieDetailPresenter
+
+    private var movie: Movie? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            movie = it.getSerializable(Consts.BUNDLE_MOVIE_DETAIL_LEY) as Movie?
         }
+        presenter = MovieDetailPresenter(movie)
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies_details, container, false)
+
+        var rootView = inflater.inflate(R.layout.fragment_movies_details, container, false)
+        view = MovieDetailView(this, rootView)
+        presenter.initView(view)
+
+        return rootView
     }
 
 

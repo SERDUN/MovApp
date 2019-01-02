@@ -2,7 +2,9 @@ package dmitriiserdun.gmail.com.movapp.ui.screen.movies_group.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import android.support.v7.graphics.Palette
 import android.widget.LinearLayout
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.FlexboxLayoutManager
+import dmitriiserdun.gmail.com.movapp.App
 
 
 class MovieAdapter(
@@ -47,15 +50,29 @@ class MovieAdapter(
             listener: (MovieItem) -> Unit,
             items: List<MovieItem>
         ) = with(itemView) {
-            //            var ll = FlexboxLayoutManager.LayoutParams(widthItem, (widthItem * 1.75).toInt())
             view.setOnClickListener { listener(item) }
-//            view.layoutParams = ll
             Picasso.get().load(BuildConfig.API_IMAGE_URL + item.dto.backdropPath)
                 .into(object : Target {
                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                        iv_info_container_rv.setBackgroundColor(Color.GRAY)
+                        iv_item_rv.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                App.instance,
+                                R.drawable.ic_image_black_24dp
+                            )
+                        )
+
+
                     }
 
                     override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                        iv_item_rv.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                App.instance,
+                                R.drawable.ic_broken_image_black_24dp
+                            )
+                        )
+
                     }
 
                     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
