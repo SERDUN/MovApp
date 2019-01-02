@@ -69,7 +69,7 @@ class NavigationControllerImpl(private val activity: BaseActivity) : NavigationC
 
     private fun navigateGroupMoviesFragment(screen: Screen, bundle: Bundle?, animateType: ScreenAnimType?) {
         switchFragmentScreen(
-            screen, bundle, false, true, currentNavigationContainer
+            screen, bundle, false, false, currentNavigationContainer
             , getAnimationByType(animateType)
         )
 

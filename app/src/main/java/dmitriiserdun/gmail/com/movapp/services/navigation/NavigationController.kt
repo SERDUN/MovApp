@@ -7,12 +7,6 @@ import dmitriiserdun.gmail.com.movapp.services.navigation.enumeration.ScreenAnim
 import dmitriiserdun.gmail.com.movapp.services.navigation.enumeration.ScreenType
 
 interface NavigationController {
-//    fun navigateTo(screen: Screen, type: ScreenType)
-//    fun navigateTo(screen: Screen, type: ScreenType, bundle: Bundle?)
-//    fun navigateTo(screen: Screen, type: ScreenType, animateType: ScreenAnimType)
-//    fun navigateTo(screen: Screen, type: ScreenType, bundle: Bundle?, animateType: AnimateType)
-//    fun navigateTo(screen: Screen, type: ScreenType, bundle: Bundle?, animateType: AnimateType?, stackKey: String?)
-
     fun navigateTo(screen: Screen, type: ScreenType):NavigationController
     fun animate(animateType: ScreenAnimType):NavigationController
     fun bundle(bundle: Bundle?):NavigationController

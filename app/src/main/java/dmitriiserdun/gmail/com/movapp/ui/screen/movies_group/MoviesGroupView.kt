@@ -3,6 +3,9 @@ package dmitriiserdun.gmail.com.movapp.ui.screen.movies_group
 import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.google.android.flexbox.FlexDirection
@@ -24,10 +27,50 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.json.JSONException
 import android.support.v7.widget.LinearLayoutManager
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
+import com.jakewharton.rxbinding2.view.RxView
 import dmitriiserdun.gmail.com.movapp.tools.Consts
+import dmitriiserdun.gmail.com.movapp.ui.base.CustomSnackBar
+import io.reactivex.Observable
 
 
 class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupContract.MoviesGroupView {
+    override fun onReloadAction(): Observable<Any> {
+        return RxView.clicks(view.findViewById<Button>(R.id.btn_reload))
+    }
+
+    override fun isShowErrorAndButtonForReload(isShow: Boolean) {
+        if (isShow) {
+            view.findViewById<ViewGroup>(R.id.ll_error_container).visibility = View.VISIBLE
+
+        } else {
+            view.findViewById<ViewGroup>(R.id.ll_error_container).visibility = View.GONE
+        }
+    }
+
+    override fun showError(msg: String) {
+        CustomSnackBar.builder()
+            .setActivity(fragment.activity!!)
+            .setText(msg)
+            .setDuration(Snackbar.LENGTH_LONG)
+            .error()
+            .show()
+    }
+
+    override fun isVisibleLoader(isVisible: Boolean) {
+
+        if (isVisible) {
+            view.findViewById<ProgressBar>(R.id.pb_movies).visibility = View.VISIBLE
+
+        } else {
+            view.findViewById<ProgressBar>(R.id.pb_movies).visibility = View.GONE
+        }
+
+
+    }
+
     var onBottomAction = PublishSubject.create<Any>()
 
     override fun onBottomScrollAction(): Subject<Any> {
@@ -35,8 +78,10 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     }
 
     override fun setMoviesData(movies: List<MovieItem>) {
-        moviesData.addAll(movies)
-        moviesRecyclerViewAdapter.notifyDataSetChanged()
+        Handler(Looper.getMainLooper()).postDelayed({
+            moviesData.addAll(movies)
+            moviesRecyclerViewAdapter.notifyDataSetChanged()
+        },0)
     }
 
     private var itemDecoration: RecyclerView.ItemDecoration = object : RecyclerView.ItemDecoration() {
@@ -61,17 +106,6 @@ class MoviesGroupView(var fragment: BaseFragment, var view: View) : MoviesGroupC
     }
 
     private fun initRecyclerView() {
-        val display = fragment.activity!!.getWindowManager().getDefaultDisplay()
-        val size = Point()
-        display.getSize(size)
-        var width = 0
-//
-//        if (fragment.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            width = size.y
-//        } else {
-//            width = size.x
-//        }
-//        width = (width - Tools.convertDpToPixel(24f, App.instance)).toInt()/2
         moviesRecyclerViewAdapter = MovieAdapter(moviesData, App.instance) {
             var bundle = Bundle()
             bundle.putSerializable(Consts.BUNDLE_MOVIE_DETAIL_LEY, it.dto)

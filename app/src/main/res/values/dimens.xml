@@ -2,5 +2,6 @@
 <resources>
     <dimen name="cardTitle">18dp</dimen>
     <dimen name="cardBody">16dp</dimen>
+    <dimen name="snacky_icon_padding">16dp</dimen>
 
 </resources>

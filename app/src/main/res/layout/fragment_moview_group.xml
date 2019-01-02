@@ -26,5 +26,32 @@
                 android:id="@+id/rv_movies_group_movies"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
+        <ProgressBar android:layout_width="wrap_content"
+                     android:layout_gravity="center"
+                     android:id="@+id/pb_movies"
+                     android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:id="@+id/ll_error_container"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:textColor="@android:color/white"
+                      android:gravity="center" android:layout_height="wrap_content"
+                      android:text="There was a problem loading the data"
+                      android:layout_weight="1"/>
+            <Button android:layout_width="wrap_content"
+                    android:id="@+id/btn_reload"
+                    android:textColor="@android:color/white"
+
+                    android:layout_margin="24dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Reload"
+            />
+        </LinearLayout>
     </FrameLayout>
 </LinearLayout>
